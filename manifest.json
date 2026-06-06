@@ -1,0 +1,10 @@
+{
+  "Name": "The Marauder's Map",
+  "Author": "fuukangun",
+  "Version": "1.0.0",
+  "Description": "An independent live map showing NPC names, friendship colors, and fading footprints.",
+  "UniqueID": "Fuukangun.TheMarauderMap",
+  "EntryDll": "TheMarauderMap.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}
