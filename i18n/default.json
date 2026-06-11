@@ -1,0 +1,12 @@
+{
+  "gmcm.open_map_key.name": "Open map key",
+  "gmcm.open_map_key.tooltip": "The keybind used to open or close The Marauder's Map.",
+  "gmcm.enable_footprints.name": "Enable footprints",
+  "gmcm.enable_footprints.tooltip": "Show recent fading NPC footprints on the map.",
+  "gmcm.enable_friendship_colors.name": "Enable friendship colors",
+  "gmcm.enable_friendship_colors.tooltip": "Color NPC names based on friendship heart level.",
+  "gmcm.footprint_interval.name": "Footprint interval",
+  "gmcm.footprint_interval.tooltip": "How often to record NPC positions in in-game minutes.",
+  "gmcm.visible_footprints.name": "Visible footprint points",
+  "gmcm.visible_footprints.tooltip": "How many recent footprint samples to draw per NPC."
+}

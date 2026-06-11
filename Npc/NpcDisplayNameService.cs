@@ -6,12 +6,12 @@ public static class NpcDisplayNameService
 {
     public static string GetMapDisplayName(string npcName, string displayName)
     {
-        return GetMapDisplayName(npcName, displayName, MapLanguage.Chinese);
+        return GetMapDisplayName(npcName, displayName, isChinese: true);
     }
 
-    public static string GetMapDisplayName(string npcName, string displayName, MapLanguage language)
+    public static string GetMapDisplayName(string npcName, string displayName, bool isChinese)
     {
-        return MapLocalizer.GetNpcDisplayName(npcName, displayName, language);
+        return MapLanguageService.GetNpcDisplayName(npcName, displayName, isChinese);
     }
 
     public static bool ShouldShowHeart(string npcName, string? spouseName)

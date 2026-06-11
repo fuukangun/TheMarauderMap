@@ -26,7 +26,7 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
     private readonly Func<bool> _areFootprintsEnabled;
     private readonly Func<bool> _areFriendshipColorsEnabled;
     private readonly Func<bool> _shouldShowDebugOverlay;
-    private readonly Func<MapLanguage> _getLanguage;
+    private readonly Func<bool> _isChineseLanguage;
     private readonly MapOverlayStats _stats;
 
     private readonly PredictionSelectionState _predictionSelection = new();
@@ -53,7 +53,7 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
         Func<bool> areFootprintsEnabled,
         Func<bool> areFriendshipColorsEnabled,
         Func<bool> shouldShowDebugOverlay,
-        Func<MapLanguage> getLanguage,
+        Func<bool> isChineseLanguage,
         MapOverlayStats stats,
         string modDirectory)
         : base(0, 0, Game1.uiViewport.Width, Game1.uiViewport.Height, true)
@@ -69,7 +69,7 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
         _areFootprintsEnabled = areFootprintsEnabled;
         _areFriendshipColorsEnabled = areFriendshipColorsEnabled;
         _shouldShowDebugOverlay = shouldShowDebugOverlay;
-        _getLanguage = getLanguage;
+        _isChineseLanguage = isChineseLanguage;
         _stats = stats;
     }
 
@@ -252,7 +252,7 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
             }
 
             bool isSelected = string.Equals(npc.Name, _predictionSelection.SelectedNpcName, StringComparison.OrdinalIgnoreCase);
-            _nameRenderer.DrawName(b, GetMapDisplayName(npc, _getLanguage()), screenPosition, color, 1f, isSelected, NpcDisplayNameService.ShouldShowHeart(npc.Name, Game1.player.spouse));
+            _nameRenderer.DrawName(b, GetMapDisplayName(npc, _isChineseLanguage()), screenPosition, color, 1f, isSelected, NpcDisplayNameService.ShouldShowHeart(npc.Name, Game1.player.spouse));
         }
 
         _lastNpcCoordinateBounds = npcCoordinateBounds;
@@ -290,7 +290,7 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
             }
 
             bool isSelected = string.Equals(npc.Name, _predictionSelection.SelectedNpcName, StringComparison.OrdinalIgnoreCase);
-            _nameRenderer.DrawName(b, GetMapDisplayName(npc, _getLanguage()), screenPosition, color, transform.Zoom, isSelected, NpcDisplayNameService.ShouldShowHeart(npc.Name, Game1.player.spouse));
+            _nameRenderer.DrawName(b, GetMapDisplayName(npc, _isChineseLanguage()), screenPosition, color, transform.Zoom, isSelected, NpcDisplayNameService.ShouldShowHeart(npc.Name, Game1.player.spouse));
         }
 
         _lastNpcCoordinateBounds = npcCoordinateBounds;
@@ -309,12 +309,12 @@ public sealed class MarauderMapOverlay : IClickableMenu, IMarauderMapOverlay
 
     public static string GetMapDisplayName(NPC npc)
     {
-        return GetMapDisplayName(npc, MapLanguage.Chinese);
+        return GetMapDisplayName(npc, isChinese: true);
     }
 
-    public static string GetMapDisplayName(NPC npc, MapLanguage language)
+    public static string GetMapDisplayName(NPC npc, bool isChinese)
     {
-        return NpcDisplayNameService.GetMapDisplayName(npc.Name, npc.displayName, language);
+        return NpcDisplayNameService.GetMapDisplayName(npc.Name, npc.displayName, isChinese);
     }
 
     private void TrySelectNpcAtCursor()

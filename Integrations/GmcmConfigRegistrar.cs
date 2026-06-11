@@ -1,6 +1,5 @@
 using StardewModdingAPI;
 using TheMarauderMap.Config;
-using TheMarauderMap.Localization;
 
 namespace TheMarauderMap.Integrations;
 
@@ -20,11 +19,13 @@ public static class GmcmConfigRegistrar
         };
     }
 
-    public static void Register(IModHelper helper, IManifest manifest, Func<MarauderMapConfig> getConfig, Action<MarauderMapConfig> setConfig, Action save, Func<MapLanguage> getLanguage)
+    public static void Register(IModHelper helper, IManifest manifest, Func<MarauderMapConfig> getConfig, Action<MarauderMapConfig> setConfig, Action save)
     {
         IGenericModConfigMenuApi? api = helper.ModRegistry.GetApi<IGenericModConfigMenuApi>(GenericModConfigMenuId);
         if (api is null)
             return;
+
+        ITranslationHelper translations = helper.Translation;
 
         api.Register(
             manifest,
@@ -36,32 +37,32 @@ public static class GmcmConfigRegistrar
             manifest,
             getValue: () => getConfig().OpenMapKey,
             setValue: value => getConfig().OpenMapKey = value,
-            name: () => MapLocalizer.Text("gmcm.open_map_key.name", getLanguage()),
-            tooltip: () => MapLocalizer.Text("gmcm.open_map_key.tooltip", getLanguage())
+            name: () => translations.Get("gmcm.open_map_key.name"),
+            tooltip: () => translations.Get("gmcm.open_map_key.tooltip")
         );
 
         api.AddBoolOption(
             manifest,
             getValue: () => getConfig().EnableFootprints,
             setValue: value => getConfig().EnableFootprints = value,
-            name: () => MapLocalizer.Text("gmcm.enable_footprints.name", getLanguage()),
-            tooltip: () => MapLocalizer.Text("gmcm.enable_footprints.tooltip", getLanguage())
+            name: () => translations.Get("gmcm.enable_footprints.name"),
+            tooltip: () => translations.Get("gmcm.enable_footprints.tooltip")
         );
 
         api.AddBoolOption(
             manifest,
             getValue: () => getConfig().EnableFriendshipColors,
             setValue: value => getConfig().EnableFriendshipColors = value,
-            name: () => MapLocalizer.Text("gmcm.enable_friendship_colors.name", getLanguage()),
-            tooltip: () => MapLocalizer.Text("gmcm.enable_friendship_colors.tooltip", getLanguage())
+            name: () => translations.Get("gmcm.enable_friendship_colors.name"),
+            tooltip: () => translations.Get("gmcm.enable_friendship_colors.tooltip")
         );
 
         api.AddNumberOption(
             manifest,
             getValue: () => getConfig().RecordIntervalMinutes,
             setValue: value => getConfig().RecordIntervalMinutes = value,
-            name: () => MapLocalizer.Text("gmcm.footprint_interval.name", getLanguage()),
-            tooltip: () => MapLocalizer.Text("gmcm.footprint_interval.tooltip", getLanguage()),
+            name: () => translations.Get("gmcm.footprint_interval.name"),
+            tooltip: () => translations.Get("gmcm.footprint_interval.tooltip"),
             min: 10,
             max: 30,
             interval: 10
@@ -71,8 +72,8 @@ public static class GmcmConfigRegistrar
             manifest,
             getValue: () => getConfig().MaxVisibleFootprintPoints,
             setValue: value => getConfig().MaxVisibleFootprintPoints = value,
-            name: () => MapLocalizer.Text("gmcm.visible_footprints.name", getLanguage()),
-            tooltip: () => MapLocalizer.Text("gmcm.visible_footprints.tooltip", getLanguage()),
+            name: () => translations.Get("gmcm.visible_footprints.name"),
+            tooltip: () => translations.Get("gmcm.visible_footprints.tooltip"),
             min: 2,
             max: 40,
             interval: 1
