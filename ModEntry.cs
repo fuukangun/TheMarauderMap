@@ -49,7 +49,7 @@ public sealed class ModEntry : Mod
 
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
     {
-        GmcmConfigRegistrar.Register(Helper, ModManifest, () => _config, config => _config = config, SaveConfig, GetLanguage);
+        GmcmConfigRegistrar.Register(Helper, ModManifest, () => _config, config => _config = config, SaveConfig);
     }
 
     private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
@@ -188,7 +188,7 @@ public sealed class ModEntry : Mod
             () => _config.EnableFootprints,
             () => _config.EnableFriendshipColors,
             () => _config.ShowDebugOverlay,
-            GetLanguage,
+            IsChineseLanguage,
             new MapOverlayStats(
                 () => _tracker.GetTrackedNpcCount(),
                 () => _lastRecordedTime
@@ -197,9 +197,9 @@ public sealed class ModEntry : Mod
         );
     }
 
-    private static MapLanguage GetLanguage()
+    private static bool IsChineseLanguage()
     {
-        return MapLocalizer.NormalizeLanguage(StardewValley.LocalizedContentManager.CurrentLanguageCode.ToString());
+        return MapLanguageService.IsChinese(StardewValley.LocalizedContentManager.CurrentLanguageCode.ToString());
     }
 
     private bool ShouldRecordAtTime(int timeOfDay)
